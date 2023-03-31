@@ -146,7 +146,8 @@ type Library struct {
 
 func NewLibrary() *Library {
 	build := ghttp.NewClientBuilder()
-
+	//默认设置当前请求方来源
+	build.SetHeader(map[string]string{"Origin": "%s"})
 
 	return &Library{
 		build:    build,
@@ -183,6 +184,7 @@ func createInfLib(projectName string) {
 	//创建实体文件
 	_, err = file.WriteString(fmt.Sprintf(
 		infLibTxt,
+		projectName,
 	))
 
 	if err != nil {
@@ -227,10 +229,64 @@ func (r *Repositories) Rollback() *gorm.DB {
 
 func (r *Repositories) Commit() *gorm.DB {
 	return r.tx.Commit()
+}`
+
+func createInfPer(projectName string) {
+	var path strings.Builder
+	path.WriteString("./")
+	path.WriteString(projectName)
+	path.WriteString("/")
+	path.WriteString(ProjectDirList[DirInfPer])
+	path.WriteString("/db.go")
+
+	is, err := PathExists(path.String())
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	if is {
+		fmt.Println("file exist")
+		os.Exit(1)
+	}
+
+	file, err := os.OpenFile(path.String(), os.O_CREATE, os.ModePerm)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	//创建实体文件
+	_, err = file.WriteString(fmt.Sprintf(
+		infPerTxt,
+	))
+
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+}
+
+var infPerBase = `
+package persistence
+
+import (
+	"gorm.io/gorm"
+)
+
+type Option func(*gorm.DB) *gorm.DB
+
+type Base struct {
+}
+
+func (*Base) Limit(page, size int) Option {
+	return func(db *gorm.DB) *gorm.DB {
+		return db.Limit(size).Offset((page - 1) * size)
+	}
 }
 `
 
-func createInfPer(projectName string) {
+func createInfPerBase(projectName string) {
 	var path strings.Builder
 	path.WriteString("./")
 	path.WriteString(projectName)

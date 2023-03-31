@@ -92,6 +92,8 @@ func InitProject(name string) {
 	createInfCache(name)
 	createInfLib(name)
 	createInfPer(name)
+	createInfPerBase(name)
+
 	createCmd(name)
 
 	createMod(name)
