@@ -42,7 +42,7 @@ func GetRouter() *gin.Engine {
 
 	/************************************************************/
 	router.GET("/", func(context *gin.Context) {
-		context.String(http.StatusOK, "我见青山多妩媚，料青山见我应如是 --- qiu \n")
+		context.String(http.StatusOK, "我见青山多妩媚，料青山见我应如是 --- %s \n")
 		return
 	})
 	return router
@@ -78,6 +78,7 @@ func CreateRouter(projectName string) {
 	//创建实体文件
 	_, err = file.WriteString(fmt.Sprintf(
 		routerText,
+		projectName,
 		projectName,
 		projectName,
 		projectName,
