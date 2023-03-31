@@ -149,9 +149,6 @@ func NewLibrary() *Library {
 
 
 	return &Library{
-		MpServer: mp.NewServer(build),
-		Cc:       cc.NewServer(build),
-		Order:    order.NewServer(build),
 		build:    build,
 	}
 }

@@ -15,10 +15,10 @@ import (
 )
 
 type demoHandler struct {
-	demoApp application.Demo
+	demoApp application.IDemo
 }
 
-func NewDemoHandler(d application.Demo) *demoHandler {
+func NewDemoHandler(d application.IDemo) *demoHandler {
 	return &demoHandler{
 		demoApp: d,
 	}
