@@ -27,7 +27,7 @@ func NewDemoHandler(d application.IDemo) *demoHandler {
 func (d *demoHandler) Demo(c *gin.Context) {
 	//在控制器里，不许有业务逻辑代码，只能做数据验证，要完全保证应用层传入的数据是对的
 
-	d.demoApp.Save("秋")
+	d.demoApp.Save(c, "秋")
 }
 `
 

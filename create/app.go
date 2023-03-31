@@ -15,7 +15,7 @@ import (
 
 type IDemo interface {
 	// Save demo
-	Save(demo string) error
+	Save(ctx context.Context, demo string) error
 }
 
 var _ IDemo = demoApp{}
@@ -29,7 +29,7 @@ func NewDemoApp() IDemo {
 	}
 }
 
-func (d demoApp) Save(demo string) error {
+func (d demoApp) Save(ctx context.Context, demo string) error {
 	fmt.Println(demo)
 
 	//这里可以调用domain & infrastructure封装好的代码，控制业务逻辑的走向
