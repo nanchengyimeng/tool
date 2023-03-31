@@ -216,6 +216,7 @@ func newRepositories(db *gorm.DB) *Repositories {
 
 func NewPersistence() *Repositories {
 	var db *gorm.DB
+	// TODO init db
 	return newRepositories(db)
 }
 

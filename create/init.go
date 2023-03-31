@@ -1,6 +1,7 @@
 package create
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -94,6 +95,11 @@ func InitProject(name string) {
 	createCmd(name)
 
 	createMod(name)
+
+	echo := `
+project create success
+please run 'go mod tidy' in your project!`
+	fmt.Println(echo)
 }
 
 func (p *project) init(mode string) error {
